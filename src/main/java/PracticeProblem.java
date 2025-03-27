@@ -1,7 +1,10 @@
+import java.util.Arrays;
+
 public class PracticeProblem {
 
 	public static void main(String args[]) {
 		bubbleSort(new double[]{2.4, 7.7, 3.2});
+		System.out.println(insertionSort(new double[] {155.2, 155.1, 1, 5, 3, 2, 7}));
 	}
 
 	//q1
@@ -36,10 +39,12 @@ public class PracticeProblem {
 				smallest = b;
 				}
 			}
-			double temp = nums2[smallest];
-			nums2[smallest] = nums2[a];
-			nums2[a] = temp;
-			countSwap = countSwap + 3;
+			if (smallest != a) {
+				double temp = nums2[smallest];
+				nums2[smallest] = nums2[a];
+				nums2[a] = temp;
+				countSwap += 3;
+			}
 		}
 		return new int[] {countSwap, countCompare};
 	}
@@ -50,13 +55,19 @@ public class PracticeProblem {
 		for (int a = 1; a < nums3.length; a++) {
 			double key = nums3[a];
 			int index = a - 1;
-			while (index >= 0 && nums3[index] > key) {
-				nums3[index + 1] = nums3[index];
-				index--;
+			while (index >= 0){
 				countCompare++;
-				countSwap++;
+				if (nums3[index] > key) {
+					nums3[index + 1] = nums3[index];
+					index--;
+					countSwap++;
+					countCompare++;
+				} else {
+					break;
+				}
 			}
 			nums3[index + 1] = key;
+			countSwap++;
 
 		}
 		return new int[] {countSwap, countCompare};
@@ -64,51 +75,56 @@ public class PracticeProblem {
 
 	//q2
 	public static String leastSwaps(double[] nums4) {
+		double[] nums1 = Arrays.copyOf(nums4, nums4.length);
+		double[] nums2 = Arrays.copyOf(nums4, nums4.length);
+		double[] nums3 = Arrays.copyOf(nums4, nums4.length); 
 		int countSwap1 = 0;
 		boolean swap = true;
-		for (int a = 0; a < nums4.length - 1 && swap; a++){
+		for (int a = 0; a < nums1.length - 1 && swap; a++){
 			swap = false;
-			for (int b = 0; b < nums4.length - 1 - a; b++){
-				if (nums4[b] > nums4[b+1]){
-					double temp = nums4[b];
-					nums4[b] = nums4[b+1];
-					nums4[b+1] = temp;
+			for (int b = 0; b < nums1.length - 1 - a; b++){
+				if (nums1[b] > nums1[b+1]){
+					double temp = nums1[b];
+					nums1[b] = nums1[b+1];
+					nums1[b+1] = temp;
 					swap = true;
 					countSwap1 = countSwap1 + 3;
 				}
 			}
 		}
-
+ 
 		int countSwap2 = 0;
-		for (int a = 0; a < nums4.length; a++) {
+		for (int a = 0; a < nums2.length; a++) {
 			int smallest = a;
-			for (int b = a + 1; b < nums4.length; b++) {
-				if (nums4[b] < nums4[smallest]) {
+			for (int b = a + 1; b < nums2.length; b++) {
+				if (nums2[b] < nums2[smallest]) {
 				smallest = b;
 				}
 			}
-			double temp = nums4[smallest];
-			nums4[smallest] = nums4[a];
-			nums4[a] = temp;
-			countSwap2 = countSwap2 + 3;
+			if (smallest != a){
+				double temp = nums2[smallest];
+				nums2[smallest] = nums2[a];
+				nums2[a] = temp;
+				countSwap2 += 3;
+			}
 		}
 
 		int countSwap3 = 0;
-		for (int a = 1; a < nums4.length; a++) {
-			double key = nums4[a];
+		for (int a = 1; a < nums3.length; a++) {
+			double key = nums3[a];
 			int index = a - 1;
-			while (index >= 0 && nums4[index] > key) {
-				nums4[index + 1] = nums4[index];
+			while (index >= 0 && nums3[index] > key) {
+				nums3[index + 1] = nums3[index];
 				index--;
 				countSwap3++;
 			}
-			nums4[index + 1] = key;
-
+				nums3[index + 1] = key;
+				countSwap3++;
 		}
 
-		if ((countSwap1 < countSwap2) && (countSwap1 < countSwap3)) {
+		if ((countSwap1 <= countSwap2) && (countSwap1 <= countSwap3)) {
 			return "Bubble";
-		} else if ((countSwap2 < countSwap1) && (countSwap2 < countSwap3)) {
+		} else if ((countSwap2 <= countSwap1) && (countSwap2 <= countSwap3)) {
 			return "Selection";
 		} else {
 			return "Insertion";
@@ -117,15 +133,18 @@ public class PracticeProblem {
 
 	//q3 
 	public static String leastIterations(double[] nums5) {
+		double[] nums1 = Arrays.copyOf(nums5, nums5.length);
+		double[] nums2 = Arrays.copyOf(nums5, nums5.length);
+		double[] nums3 = Arrays.copyOf(nums5, nums5.length);
 		int countIterations1 = 0;
 		boolean swap = true;
-		for (int a = 0; a < nums5.length - 1 && swap; a++){
+		for (int a = 0; a < nums1.length - 1 && swap; a++){
 			swap = false;
-			for (int b = 0; b < nums5.length - 1 - a; b++){
-				if (nums5[b] > nums5[b+1]){
-					double temp = nums5[b];
-					nums5[b] = nums5[b+1];
-					nums5[b+1] = temp;
+			for (int b = 0; b < nums1.length - 1 - a; b++){
+				if (nums1[b] > nums1[b+1]){
+					double temp = nums1[b];
+					nums1[b] = nums1[b+1];
+					nums1[b+1] = temp;
 					swap = true;
 				}
 				countIterations1++;
@@ -133,34 +152,34 @@ public class PracticeProblem {
 		}
 
 		int countIterations2 = 0;
-		for (int a = 0; a < nums5.length; a++) {
+		for (int a = 0; a < nums2.length; a++) {
 			int smallest = a;
-			for (int b = a + 1; b < nums5.length; b++) {
-				if (nums5[b] < nums5[smallest]) {
+			for (int b = a + 1; b < nums2.length; b++) {
+				if (nums2[b] < nums2[smallest]) {
 				smallest = b;
 				}
 				countIterations2++;
 			}
-			double temp = nums5[smallest];
-			nums5[smallest] = nums5[a];
-			nums5[a] = temp;
+			double temp = nums2[smallest];
+			nums2[smallest] = nums2[a];
+			nums2[a] = temp;
 		}
 
 		int countIterations3 = 0;
-		for (int a = 1; a < nums5.length; a++) {
-			double key = nums5[a];
+		for (int a = 1; a < nums3.length; a++) {
+			double key = nums3[a];
 			int index = a - 1;
-			while (index >= 0 && nums5[index] > key) {
-				nums5[index + 1] = nums5[index];
+			while (index >= 0 && nums3[index] > key) {
+				nums3[index + 1] = nums3[index];
 				index--;
+				countIterations3++;
 			}
-			nums5[index + 1] = key;
-			countIterations3++;
+			nums3[index + 1] = key;
 		}
 
-		if ((countIterations1 < countIterations2) && (countIterations1 < countIterations3)) {
+		if ((countIterations1 <= countIterations2) && (countIterations1 <= countIterations3)) {
 			return "Bubble";
-		} else if ((countIterations2 < countIterations1) && (countIterations2 < countIterations3)) {
+		} else if ((countIterations2 <= countIterations1) && (countIterations2 <= countIterations3)) {
 			return "Selection";
 		} else {
 			return "Insertion";
