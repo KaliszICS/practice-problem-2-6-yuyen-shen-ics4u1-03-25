@@ -61,7 +61,6 @@ public class PracticeProblem {
 					nums3[index + 1] = nums3[index];
 					index--;
 					countSwap++;
-					countCompare++;
 				} else {
 					break;
 				}
@@ -135,7 +134,7 @@ public class PracticeProblem {
 	public static String leastIterations(double[] nums5) {
 		double[] nums1 = Arrays.copyOf(nums5, nums5.length);
 		double[] nums2 = Arrays.copyOf(nums5, nums5.length);
-		double[] nums3 = Arrays.copyOf(nums5, nums5.length);
+		double[] nums3 = Arrays.copyOf(nums5, nums5.length); 
 		int countIterations1 = 0;
 		boolean swap = true;
 		for (int a = 0; a < nums1.length - 1 && swap; a++){
