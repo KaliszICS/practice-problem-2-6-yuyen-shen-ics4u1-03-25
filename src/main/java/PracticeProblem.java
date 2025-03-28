@@ -31,20 +31,20 @@ public class PracticeProblem {
 	public static int[] selectionSort(double[] nums2) {
 		int countSwap = 0;
 		int countCompare = 0;
-		for (int a = 0; a < nums2.length; a++) {
+		for (int a = 0; a < nums2.length-1; a++) {
 			int smallest = a;
 			for (int b = a + 1; b < nums2.length; b++) {
 				countCompare++;
 				if (nums2[b] < nums2[smallest]) {
 				smallest = b;
+				countSwap++;
 				}
 			}
-			if (smallest != a) {
 				double temp = nums2[smallest];
 				nums2[smallest] = nums2[a];
 				nums2[a] = temp;
 				countSwap += 3;
-			}
+			
 		}
 		return new int[] {countSwap, countCompare};
 	}
@@ -53,17 +53,14 @@ public class PracticeProblem {
 		int countSwap = 0;
 		int countCompare = 0;
 		for (int a = 1; a < nums3.length; a++) {
+			countSwap++;
 			double key = nums3[a];
 			int index = a - 1;
-			while (index >= 0){
+			while (index >= 0 && nums3[index] > key){
 				countCompare++;
-				if (nums3[index] > key) {
-					nums3[index + 1] = nums3[index];
-					index--;
-					countSwap++;
-				} else {
-					break;
-				}
+				nums3[index + 1] = nums3[index];
+				index--;
+				countSwap++;
 			}
 			nums3[index + 1] = key;
 			countSwap++;
@@ -79,54 +76,16 @@ public class PracticeProblem {
 		double[] nums3 = Arrays.copyOf(nums4, nums4.length); 
 		int countSwap1 = 0;
 		boolean swap = true;
-		for (int a = 0; a < nums1.length - 1 && swap; a++){
-			swap = false;
-			for (int b = 0; b < nums1.length - 1 - a; b++){
-				if (nums1[b] > nums1[b+1]){
-					double temp = nums1[b];
-					nums1[b] = nums1[b+1];
-					nums1[b+1] = temp;
-					swap = true;
-					countSwap1 = countSwap1 + 3;
-				}
-			}
-		}
- 
-		int countSwap2 = 0;
-		for (int a = 0; a < nums2.length; a++) {
-			int smallest = a;
-			for (int b = a + 1; b < nums2.length; b++) {
-				if (nums2[b] < nums2[smallest]) {
-				smallest = b;
-				}
-			}
-			if (smallest != a){
-				double temp = nums2[smallest];
-				nums2[smallest] = nums2[a];
-				nums2[a] = temp;
-				countSwap2 += 3;
-			}
-		}
+		int[] bubble = bubbleSort(nums1);
+		int[] insertion = insertionSort(nums2);
+		int[] selection = selectionSort(nums3);
 
-		int countSwap3 = 0;
-		for (int a = 1; a < nums3.length; a++) {
-			double key = nums3[a];
-			int index = a - 1;
-			while (index >= 0 && nums3[index] > key) {
-				nums3[index + 1] = nums3[index];
-				index--;
-				countSwap3++;
-			}
-				nums3[index + 1] = key;
-				countSwap3++;
-		}
-
-		if ((countSwap1 <= countSwap2) && (countSwap1 <= countSwap3)) {
+		if ((bubble[0] < insertion[0]) && (bubble[0] < selection[0])) {
 			return "Bubble";
-		} else if ((countSwap2 <= countSwap1) && (countSwap2 <= countSwap3)) {
-			return "Selection";
-		} else {
+		} else if ((insertion[0] < bubble[0]) && (insertion[0] < selection[0])) {
 			return "Insertion";
+		} else {
+			return "Selection";
 		}
 	}
 
